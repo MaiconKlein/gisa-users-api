@@ -1,0 +1,21 @@
+auth0:
+  audience: https://dev-0yczl7li.us.auth0.com/api/v2/
+spring:
+  security.oauth2.resourceserver.jwt.issuer-uri: https://dev-0yczl7li.us.auth0.com/
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/gisa_conveniado?allowPublicKeyRetrieval=true&rewriteBatchedStatements=true&useSSL=false&useUnicode=yes&characterEncoding=UTF-8&useLegacyDatetimeCode=true&createDatabaseIfNotExist=true&useTimezone=true&serverTimezone=UTC
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+      use-new-id-generator-mappings: false
+
+
+logging.level.root: INFO
+
+
