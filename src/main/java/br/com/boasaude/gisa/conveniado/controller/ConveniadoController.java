@@ -17,7 +17,7 @@ public class ConveniadoController {
 
     @GetMapping
     public ResponseEntity<String> find() {
-        return ResponseEntity.ok("Hello Private!");
+        return new ResponseEntity(conveniadoService.listar(), HttpStatus.OK);
     }
 
     @PostMapping
