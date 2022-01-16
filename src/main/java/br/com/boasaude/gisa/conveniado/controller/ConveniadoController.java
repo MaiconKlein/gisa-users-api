@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/public/v1/conveniados")
+@RequestMapping("/public/conveniados")
 @RequiredArgsConstructor
 public class ConveniadoController {
     private final ConveniadoService conveniadoService;
