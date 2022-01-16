@@ -6,11 +6,10 @@ plugins {
 
 jar {
 	manifest {
-		attributes(
-				'Main-Class': 'br.com.boasaude.gisa.conveniado.Application'
-		)
+		attributes 'Main-Class': 'br.com.boasaude.gisa.conveniado.Application'
 	}
 }
+
 
 group = 'br.com.boasaude'
 version = '0.0.1-SNAPSHOT'
