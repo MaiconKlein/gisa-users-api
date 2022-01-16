@@ -3,10 +3,10 @@ auth0:
 spring:
   security.oauth2.resourceserver.jwt.issuer-uri: https://dev-0yczl7li.us.auth0.com/
   datasource:
-#    url:  jdbc:${DATABASE_URL}
-    username: pmwexohkhcbnoe
-    password: 9448a05e66c320741948b054b28c92440d2661e70e581e821a4db626d5b9ae67
-    url: jdbc:postgresql://ec2-54-225-14-17.compute-1.amazonaws.com:5432/d3q7r6aktr0adh?allowPublicKeyRetrieval=true&rewriteBatchedStatements=true&useSSL=false&useUnicode=yes&characterEncoding=UTF-8&useLegacyDatetimeCode=true&createDatabaseIfNotExist=true&useTimezone=true&serverTimezone=UTC
+    url: ${POSTGRES_DATABASE_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+#    url: jdbc:postgresql://ec2-54-225-14-17.compute-1.amazonaws.com:5432/d3q7r6aktr0adh?allowPublicKeyRetrieval=true&rewriteBatchedStatements=true&useSSL=false&useUnicode=yes&characterEncoding=UTF-8&useLegacyDatetimeCode=true&createDatabaseIfNotExist=true&useTimezone=true&serverTimezone=UTC
     hikari:
       connectionTimeout: 20000
       maximumPoolSize: 5
