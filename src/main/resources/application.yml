@@ -1,7 +1,7 @@
-auth0:
-  audience: https://dev-0yczl7li.us.auth0.com/api/v2/
+#auth0:
+#  audience: https://dev-0yczl7li.us.auth0.com/api/v2/
 spring:
-  security.oauth2.resourceserver.jwt.issuer-uri: https://dev-0yczl7li.us.auth0.com/
+#  security.oauth2.resourceserver.jwt.issuer-uri: https://dev-0yczl7li.us.auth0.com/
   datasource:
     url: ${POSTGRES_DATABASE_URL}
     username: ${POSTGRES_USERNAME}
