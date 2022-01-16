@@ -1,4 +1,4 @@
-package br.com.boasaude.gisa.conveniado.controller.publics;
+package br.com.boasaude.gisa.conveniado.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

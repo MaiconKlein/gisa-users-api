@@ -1,4 +1,4 @@
-package br.com.boasaude.gisa.conveniado.controller.privates;
+package br.com.boasaude.gisa.conveniado.controller;
 
 import br.com.boasaude.gisa.conveniado.dto.ConveniadoDto;
 import br.com.boasaude.gisa.conveniado.service.ConveniadoService;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/private/v1/conveniados")
+@RequestMapping("/api/public/v1/conveniados")
 @RequiredArgsConstructor
 public class ConveniadoController {
     private final ConveniadoService conveniadoService;
