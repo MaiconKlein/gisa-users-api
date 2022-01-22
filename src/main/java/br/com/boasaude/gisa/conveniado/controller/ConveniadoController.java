@@ -25,4 +25,15 @@ public class ConveniadoController {
         return new ResponseEntity(conveniadoService.criar(conveniadoDto), HttpStatus.CREATED);
     }
 
+    @PutMapping
+    public ResponseEntity<ConveniadoDto> atualizar(@Valid @RequestBody ConveniadoDto conveniadoDto) {
+        return new ResponseEntity(conveniadoService.atualizar(conveniadoDto), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deletar(@Valid @RequestParam Long id) {
+        conveniadoService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

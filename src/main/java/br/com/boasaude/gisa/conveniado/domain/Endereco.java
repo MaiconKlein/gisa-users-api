@@ -16,12 +16,11 @@ import java.util.List;
 public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long enderecoId;
 
-    @OneToOne(cascade = CascadeType.PERSIST,
-            orphanRemoval = true,
+    @OneToMany(cascade = CascadeType.PERSIST,
             mappedBy = "endereco")
-    private Conveniado conveniado;
+    private List<Conveniado> conveniados;
 
     @Column(nullable = false)
     private String endereco;

@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Conveniado {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long conveniadoId;
 
     @Column(nullable = false)
     private String nome;
@@ -25,6 +25,8 @@ public class Conveniado {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id")
     private Endereco endereco;
+
 }

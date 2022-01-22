@@ -6,22 +6,70 @@ import br.com.boasaude.gisa.conveniado.dto.ConveniadoDto;
 import br.com.boasaude.gisa.conveniado.repository.ConveniadoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class ConveniadoService {
     private final ConveniadoRepository conveniadoRepository;
+    private final EnderecoService enderecoService;
 
     @Transactional(readOnly = true)
     public List<ConveniadoDto> listar() {
         List<ConveniadoDto> conveniadoDtoList = new ArrayList<>();
         conveniadoRepository.findAll().forEach(conveniado ->
-                conveniadoDtoList.add(getConveniadoDto(conveniado)));
+        {
+            ConveniadoDto conveniadoDto = getConveniadoDto(conveniado);
+            conveniadoDtoList.add(conveniadoDto);
+        });
         return conveniadoDtoList;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public ConveniadoDto criar(ConveniadoDto conveniadoDto) {
+        Endereco endereco = enderecoService.getEndereco(conveniadoDto);
+        Conveniado conveniado = getConveniado(conveniadoDto, endereco);
+        conveniadoRepository.save(conveniado);
+
+        return getConveniadoDto(conveniado);
+    }
+
+    public void delete(Long id) {
+        conveniadoRepository.deleteById(id);
+    }
+
+    @Transactional
+    public ConveniadoDto atualizar(ConveniadoDto conveniadoDto) {
+        Optional<Conveniado> conveniadoOptional = conveniadoRepository.findById(conveniadoDto.getId());
+        if (conveniadoOptional.isPresent()) {
+            Conveniado conveniado = conveniadoOptional.get();
+
+            conveniado.setCpf(conveniadoDto.getCpf());
+            conveniado.setEmail(conveniadoDto.getEmail());
+            conveniado.setNome(conveniadoDto.getNome());
+
+            enderecoService.atualizar(conveniadoDto, conveniado.getEndereco());
+
+            return getConveniadoDto(conveniadoRepository.save(conveniado));
+        }
+        throw new EntityNotFoundException("Conveniado não cadastrado");
+    }
+
+    private Conveniado getConveniado(ConveniadoDto conveniadoDto, Endereco endereco) {
+        Conveniado conveniado = Conveniado.builder()
+                .cpf(conveniadoDto.getCpf())
+                .nome(conveniadoDto.getNome())
+                .email(conveniadoDto.getEmail())
+                .conveniadoId(conveniadoDto.getId())
+                .endereco(endereco)
+                .build();
+        return conveniado;
     }
 
     private ConveniadoDto getConveniadoDto(Conveniado conveniado) {
@@ -34,26 +82,9 @@ public class ConveniadoService {
                 .cpf(conveniado.getCpf())
                 .email(conveniado.getEmail())
                 .nome(conveniado.getNome())
-                .id(conveniado.getId())
+                .id(conveniado.getConveniadoId())
                 .build();
     }
 
-    public ConveniadoDto criar(ConveniadoDto conveniadoDto) {
-        Conveniado conveniado = Conveniado.builder()
-                .cpf(conveniadoDto.getCpf())
-                .nome(conveniadoDto.getNome())
-                .email(conveniadoDto.getEmail())
-                .endereco(Endereco.builder()
-                        .endereco(conveniadoDto.getEndereco())
-                        .cep(conveniadoDto.getCep())
-                        .cidade(conveniadoDto.getCidade())
-                        .complemento(conveniadoDto.getComplemento())
-                        .estado(conveniadoDto.getEstado())
-                        .build())
-                .build();
 
-        conveniadoRepository.save(conveniado);
-
-        return getConveniadoDto(conveniado);
-    }
 }
