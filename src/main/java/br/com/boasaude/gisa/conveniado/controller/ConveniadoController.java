@@ -16,7 +16,7 @@ public class ConveniadoController {
     private final ConveniadoService conveniadoService;
 
     @GetMapping
-    public ResponseEntity<String> find() {
+    public ResponseEntity<String> listar() {
         return new ResponseEntity(conveniadoService.listar(), HttpStatus.OK);
     }
 

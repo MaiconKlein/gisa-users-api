@@ -24,10 +24,7 @@ public class Endereco {
     private Conveniado conveniado;
 
     @Column(nullable = false)
-    private String logradouro;
-
-    @Column(nullable = false)
-    private String numero;
+    private String endereco;
 
     @Column
     private String complemento;
