@@ -1,5 +1,6 @@
 package br.com.boasaude.gisa.conveniado.service;
 
+import com.auth0.client.HttpOptions;
 import com.auth0.client.auth.AuthAPI;
 import com.auth0.client.mgmt.ManagementAPI;
 import com.auth0.client.mgmt.filter.RolesFilter;
@@ -25,6 +26,7 @@ public class ManagementAPIService {
     public void atualizarUserRole(String token, String email) throws Auth0Exception {
         AuthAPI authAPI = new AuthAPI(DOMAIN, "kZLqQQ0tgxilbLMpmLykYwxLR3N90EIh", "mKs-vezECedfb1voawvqfRbZJ0LeBjC847dtZF71w_5o_EHQl4H7LjR4lDh7NHn8");
         AuthRequest authRequest = authAPI.requestToken("https://"+DOMAIN+"/api/v2/");
+        authRequest.setScope("update:users");
         TokenHolder holder = authRequest.execute();
         ManagementAPI mgmt = new ManagementAPI(DOMAIN, holder.getAccessToken());
 
