@@ -37,9 +37,9 @@ public class ManagementAPIService {
 
 
         UserFilter userFilter = new UserFilter();
-        mgmt.users().list(userFilter.withQuery("email=" + email));
+        mgmt.users().list(userFilter.withQuery("email=" + email)).execute();
 
-        mgmt.users().addRoles("1", roleIdList);
+        mgmt.users().addRoles("1", roleIdList).execute();
 
     }
 }
