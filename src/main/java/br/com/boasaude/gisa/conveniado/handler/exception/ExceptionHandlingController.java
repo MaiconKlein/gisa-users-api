@@ -1,6 +1,7 @@
 package br.com.boasaude.gisa.conveniado.handler.exception;
 
 import br.com.boasaude.gisa.conveniado.dto.ErrorResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
+@Slf4j
 @ControllerAdvice
 public class ExceptionHandlingController extends ResponseEntityExceptionHandler {
 
@@ -24,6 +26,7 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
         List<String> details = new ArrayList<>();
         details.add(ex.getLocalizedMessage());
         ErrorResponse error = new ErrorResponse("Server Error", details);
+        log.error("Erro generico: {}", ex.getMessage(), ex);
         return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -34,6 +37,7 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
             details.add("Campo " + ((FieldError) error).getField() + " : " + error.getDefaultMessage());
         }
         ErrorResponse error = new ErrorResponse("Validation Failed", details);
+        log.error("Erro: {}, Details: {}", ex.getMessage(), details.toString(), ex);
         return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
     }
 }
