@@ -4,6 +4,7 @@ import br.com.boasaude.gisa.conveniado.domain.Conveniado;
 import br.com.boasaude.gisa.conveniado.domain.Endereco;
 import br.com.boasaude.gisa.conveniado.dto.ConveniadoDto;
 import br.com.boasaude.gisa.conveniado.repository.ConveniadoRepository;
+import com.auth0.exception.Auth0Exception;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class ConveniadoService {
     private final ConveniadoRepository conveniadoRepository;
     private final EnderecoService enderecoService;
+    private final ManagementAPIService managementAPIService;
 
     @Transactional(readOnly = true)
     public List<ConveniadoDto> listar() {
@@ -32,11 +34,12 @@ public class ConveniadoService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public ConveniadoDto criar(ConveniadoDto conveniadoDto) {
+    public ConveniadoDto criar(ConveniadoDto conveniadoDto, String token) throws Auth0Exception {
         Endereco endereco = enderecoService.getEndereco(conveniadoDto);
         Conveniado conveniado = getConveniado(conveniadoDto, endereco);
         conveniadoRepository.save(conveniado);
 
+        managementAPIService.atualizarUserRole(token, conveniado.getEmail());
         return getConveniadoDto(conveniado);
     }
 
