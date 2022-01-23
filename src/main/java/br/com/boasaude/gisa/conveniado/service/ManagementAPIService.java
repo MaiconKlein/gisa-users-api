@@ -24,9 +24,8 @@ public class ManagementAPIService {
     public static final String DOMAIN = "dev-0yczl7li.us.auth0.com";
 
     public void atualizarUserRole(String token, String email) throws Auth0Exception {
-        AuthAPI authAPI = new AuthAPI(DOMAIN, "kZLqQQ0tgxilbLMpmLykYwxLR3N90EIh", "mKs-vezECedfb1voawvqfRbZJ0LeBjC847dtZF71w_5o_EHQl4H7LjR4lDh7NHn8");
+        AuthAPI authAPI = new AuthAPI(DOMAIN, "3UL6Igy5CgPdABd4X18M2lcDKkoB7vqR", "6T0gorIHT2_OuHJvcKAgGVFvKlJk5RqL6--C1UVKLBAODQNLcL1GNkdnbT_Hnqrt");
         AuthRequest authRequest = authAPI.requestToken("https://"+DOMAIN+"/api/v2/");
-        authRequest.setScope("update:users");
         TokenHolder holder = authRequest.execute();
         ManagementAPI mgmt = new ManagementAPI(DOMAIN, holder.getAccessToken());
 
