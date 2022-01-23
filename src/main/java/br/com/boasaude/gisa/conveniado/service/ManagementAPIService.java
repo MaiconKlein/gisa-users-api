@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ManagementAPIService {
 
-    public static final String DOMAIN = "dev-0yczl7li";
+    public static final String DOMAIN = "dev-0yczl7li.us.auth0.com";
 
     public void atualizarUserRole(String token, String email) throws Auth0Exception {
 //        AuthAPI authAPI = new AuthAPI(DOMAIN, "3UL6Igy5CgPdABd4X18M2lcDKkoB7vqR", "6T0gorIHT2_OuHJvcKAgGVFvKlJk5RqL6--C1UVKLBAODQNLcL1GNkdnbT_Hnqrt");
