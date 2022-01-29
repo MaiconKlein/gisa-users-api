@@ -20,12 +20,5 @@ public class UserDto {
     @NotEmpty
     private String email;
     @NotEmpty
-    private String endereco;
-    private String complemento;
-    @NotEmpty
-    private String cidade;
-    @NotEmpty
-    private String estado;
-    @NotEmpty
-    private String cep;
+    private String role;
 }
