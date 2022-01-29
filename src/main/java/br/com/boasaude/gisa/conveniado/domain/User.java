@@ -5,16 +5,16 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "conveniado", schema = "gisa_conveniado")
+@Table(name = "user", schema = "gisa")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class Conveniado {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long conveniadoId;
+    private Long userId;
 
     @Column(nullable = false)
     private String nome;
@@ -25,8 +25,6 @@ public class Conveniado {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "endereco_id")
-    private Endereco endereco;
+    private String role;
 
 }

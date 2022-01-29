@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 @NoArgsConstructor
 @Validated
-public class ConveniadoDto {
+public class UserDto {
     private Long id;
     @NotEmpty
     private String nome;

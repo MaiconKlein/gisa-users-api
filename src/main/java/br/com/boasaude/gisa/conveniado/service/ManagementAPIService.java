@@ -25,14 +25,14 @@ public class ManagementAPIService {
 
     public static final String DOMAIN = "dev-0yczl7li.us.auth0.com";
 
-    public void atualizarUserRole(String token, String email) throws Auth0Exception {
+    public void atualizarUserRole(String role, String email) throws Auth0Exception {
         AuthAPI authAPI = new AuthAPI(DOMAIN, "3UL6Igy5CgPdABd4X18M2lcDKkoB7vqR", "6T0gorIHT2_OuHJvcKAgGVFvKlJk5RqL6--C1UVKLBAODQNLcL1GNkdnbT_Hnqrt");
         AuthRequest authRequest = authAPI.requestToken("https://" + DOMAIN + "/api/v2/");
         TokenHolder holder = authRequest.execute();
         ManagementAPI mgmt = new ManagementAPI(DOMAIN, holder.getAccessToken());
 
         RolesFilter rolesFilter = new RolesFilter();
-        rolesFilter.withName("Conveniado");
+        rolesFilter.withName(role);
         Request<RolesPage> rolesPageRequest = mgmt.roles().list(rolesFilter);
         RolesPage rolesPage = rolesPageRequest.execute();
         List<String> roleIdList = rolesPage.getItems().stream().map(Role::getId).collect(Collectors.toList());
