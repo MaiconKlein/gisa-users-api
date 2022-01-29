@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<UserDto> atualizar(@Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> atualizar(@Valid @RequestBody UserDto userDto) throws Auth0Exception {
         return new ResponseEntity(userService.atualizar(userDto), HttpStatus.CREATED);
     }
 
