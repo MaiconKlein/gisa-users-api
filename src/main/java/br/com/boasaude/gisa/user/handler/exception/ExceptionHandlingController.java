@@ -1,6 +1,6 @@
-package br.com.boasaude.gisa.conveniado.handler.exception;
+package br.com.boasaude.gisa.user.handler.exception;
 
-import br.com.boasaude.gisa.conveniado.dto.ErrorResponse;
+import br.com.boasaude.gisa.user.dto.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

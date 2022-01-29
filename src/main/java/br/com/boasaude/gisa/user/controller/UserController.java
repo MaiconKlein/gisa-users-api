@@ -1,7 +1,7 @@
-package br.com.boasaude.gisa.conveniado.controller;
+package br.com.boasaude.gisa.user.controller;
 
-import br.com.boasaude.gisa.conveniado.dto.UserDto;
-import br.com.boasaude.gisa.conveniado.service.UserService;
+import br.com.boasaude.gisa.user.dto.UserDto;
+import br.com.boasaude.gisa.user.service.UserService;
 import com.auth0.exception.Auth0Exception;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

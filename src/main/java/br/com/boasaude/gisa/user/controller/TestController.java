@@ -1,4 +1,4 @@
-package br.com.boasaude.gisa.conveniado.controller;
+package br.com.boasaude.gisa.user.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

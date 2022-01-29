@@ -1,4 +1,4 @@
-package br.com.boasaude.gisa.conveniado.domain;
+package br.com.boasaude.gisa.user.domain;
 
 import lombok.*;
 
@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-public class User {
+public class GisaUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
@@ -26,5 +26,7 @@ public class User {
     private String email;
 
     private String role;
+
+    private String areaAtuacao;
 
 }

@@ -1,4 +1,4 @@
-package br.com.boasaude.gisa.conveniado.dto;
+package br.com.boasaude.gisa.user.dto;
 
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
@@ -21,4 +21,6 @@ public class UserDto {
     private String email;
     @NotEmpty
     private String role;
+
+    private String areaAtuacao;
 }

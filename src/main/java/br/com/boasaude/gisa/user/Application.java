@@ -1,4 +1,4 @@
-package br.com.boasaude.gisa.conveniado;
+package br.com.boasaude.gisa.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

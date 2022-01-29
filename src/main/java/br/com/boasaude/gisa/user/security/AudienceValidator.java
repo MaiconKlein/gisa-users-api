@@ -1,4 +1,4 @@
-package br.com.boasaude.gisa.conveniado.security;
+package br.com.boasaude.gisa.user.security;
 
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;

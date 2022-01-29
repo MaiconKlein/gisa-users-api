@@ -1,4 +1,4 @@
-package br.com.boasaude.gisa.conveniado.dto;
+package br.com.boasaude.gisa.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

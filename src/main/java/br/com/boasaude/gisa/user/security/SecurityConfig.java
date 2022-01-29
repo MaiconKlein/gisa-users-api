@@ -1,4 +1,4 @@
-package br.com.boasaude.gisa.conveniado.security;
+package br.com.boasaude.gisa.user.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
