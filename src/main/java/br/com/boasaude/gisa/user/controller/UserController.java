@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 
 @RestController
 @RequestMapping("/private/users")
@@ -22,14 +23,16 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> criar(@Valid @RequestBody UserDto userDto, @RequestHeader (name="Authorization") String token) throws Auth0Exception {
-        UserDto dto = userService.criar(userDto, token);
+    public ResponseEntity<UserDto> criar(@Valid @RequestBody UserDto userDto,
+                                         @NotEmpty @RequestHeader String role) throws Auth0Exception {
+        UserDto dto = userService.criar(userDto, role);
         return new ResponseEntity(dto, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<UserDto> atualizar(@Valid @RequestBody UserDto userDto) throws Auth0Exception {
-        return new ResponseEntity(userService.atualizar(userDto), HttpStatus.CREATED);
+    public ResponseEntity<UserDto> atualizar(@Valid @RequestBody UserDto userDto,
+                                             @NotEmpty @RequestHeader String role) throws Auth0Exception {
+        return new ResponseEntity(userService.atualizar(userDto, role), HttpStatus.CREATED);
     }
 
     @DeleteMapping

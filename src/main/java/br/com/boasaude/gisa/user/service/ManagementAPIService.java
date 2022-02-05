@@ -1,6 +1,6 @@
 package br.com.boasaude.gisa.user.service;
 
-import br.com.boasaude.gisa.user.domain.GisaUser;
+import br.com.boasaude.gisa.user.dto.UserDto;
 import br.com.boasaude.gisa.user.exception.TechnicalException;
 import com.auth0.client.auth.AuthAPI;
 import com.auth0.client.mgmt.ManagementAPI;
@@ -48,23 +48,18 @@ public class ManagementAPIService {
         });
     }
 
-    private UsersPage getUsersByEmail(String email, ManagementAPI mgmt) throws Auth0Exception {
-        UserFilter userFilter = new UserFilter();
-        return mgmt.users().list(userFilter.withQuery("email=" + email)).execute();
-    }
-
-    public void atualizarMetadata(GisaUser gisaUser) throws Auth0Exception {
+    public void atualizarMetadata(UserDto userDto, String role) throws Auth0Exception {
         ManagementAPI mgmt = getManagementAPI();
 
-        UsersPage usersPage = getUsersByEmail(gisaUser.getEmail(), mgmt);
+        UsersPage usersPage = getUsersByEmail(userDto.getEmail(), mgmt);
 
         usersPage.getItems().stream().findAny()
                 .ifPresent(userAuth -> {
                     Map<String, Object> userMetadata = userAuth.getUserMetadata();
-                    userMetadata.put("cpf", gisaUser.getCpf());
-                    userMetadata.put("nome", gisaUser.getNome());
-                    userMetadata.put("role", gisaUser.getRole());
-                    userMetadata.put("areaAtuacao", gisaUser.getAreaAtuacao());
+                    userMetadata.put("cpf", userDto.getCpf());
+                    userMetadata.put("nome", userDto.getNome());
+                    userMetadata.put("role", role);
+                    userMetadata.put("areaAtuacao", userDto.getAreaAtuacao());
 
                     userAuth.setUserMetadata(userMetadata);
 
@@ -81,6 +76,11 @@ public class ManagementAPIService {
         AuthRequest authRequest = authAPI.requestToken("https://" + DOMAIN + "/api/v2/");
         TokenHolder holder = authRequest.execute();
         return new ManagementAPI(DOMAIN, holder.getAccessToken());
+    }
+
+    private UsersPage getUsersByEmail(String email, ManagementAPI mgmt) throws Auth0Exception {
+        UserFilter userFilter = new UserFilter();
+        return mgmt.users().list(userFilter.withQuery("email=" + email)).execute();
     }
 
 

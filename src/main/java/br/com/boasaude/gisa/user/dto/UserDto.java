@@ -19,8 +19,7 @@ public class UserDto {
     private String cpf;
     @NotEmpty
     private String email;
-    @NotEmpty
-    private String role;
 
     private String areaAtuacao;
+
 }

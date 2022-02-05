@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,12 +32,11 @@ public class UserService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public UserDto criar(UserDto userDto, String token) throws Auth0Exception {
+    public UserDto criar(UserDto userDto, String role) throws Auth0Exception {
 
         GisaUser gisaUser = getUser(userDto);
+        managementAPIService.atualizarUserRole(role, gisaUser.getEmail());
         userRepository.save(gisaUser);
-
-        managementAPIService.atualizarUserRole(token, gisaUser.getEmail());
         return getUserDto(gisaUser);
     }
 
@@ -45,17 +45,16 @@ public class UserService {
     }
 
     @Transactional
-    public UserDto atualizar(UserDto userDto) throws Auth0Exception {
+    public UserDto atualizar(UserDto userDto, String role) throws Auth0Exception {
         Optional<GisaUser> userOptional = userRepository.findById(userDto.getId());
         if (userOptional.isPresent()) {
             GisaUser gisaUser = userOptional.get();
-            gisaUser.setRole(userDto.getRole());
             gisaUser.setCpf(userDto.getCpf());
             gisaUser.setEmail(userDto.getEmail());
             gisaUser.setNome(userDto.getNome());
             gisaUser.setAreaAtuacao(userDto.getAreaAtuacao());
 
-            managementAPIService.atualizarMetadata(gisaUser);
+            managementAPIService.atualizarMetadata(userDto, role);
             return getUserDto(userRepository.save(gisaUser));
         }
 
@@ -68,7 +67,6 @@ public class UserService {
                 .nome(userDto.getNome())
                 .email(userDto.getEmail())
                 .userId(userDto.getId())
-                .role(userDto.getRole())
                 .areaAtuacao(userDto.getAreaAtuacao())
                 .build();
     }
@@ -79,7 +77,6 @@ public class UserService {
                 .email(gisaUser.getEmail())
                 .nome(gisaUser.getNome())
                 .id(gisaUser.getUserId())
-                .role(gisaUser.getRole())
                 .areaAtuacao(gisaUser.getAreaAtuacao())
                 .build();
     }

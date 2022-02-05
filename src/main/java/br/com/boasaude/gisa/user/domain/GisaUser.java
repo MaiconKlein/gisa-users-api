@@ -25,8 +25,6 @@ public class GisaUser {
     @Column(nullable = false, unique = true)
     private String email;
 
-    private String role;
-
     private String areaAtuacao;
 
 }
