@@ -22,4 +22,6 @@ public class UserDto {
 
     private String areaAtuacao;
 
+    private Long telefone;
+
 }

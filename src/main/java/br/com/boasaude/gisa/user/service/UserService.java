@@ -53,6 +53,7 @@ public class UserService {
             gisaUser.setEmail(userDto.getEmail());
             gisaUser.setNome(userDto.getNome());
             gisaUser.setAreaAtuacao(userDto.getAreaAtuacao());
+            gisaUser.setTelefone(userDto.getTelefone());
 
             managementAPIService.atualizarMetadata(userDto, role);
             return getUserDto(userRepository.save(gisaUser));
@@ -67,6 +68,7 @@ public class UserService {
                 .nome(userDto.getNome())
                 .email(userDto.getEmail())
                 .userId(userDto.getId())
+                .telefone(userDto.getTelefone())
                 .areaAtuacao(userDto.getAreaAtuacao())
                 .build();
     }
@@ -78,6 +80,7 @@ public class UserService {
                 .nome(gisaUser.getNome())
                 .id(gisaUser.getUserId())
                 .areaAtuacao(gisaUser.getAreaAtuacao())
+                .telefone(gisaUser.getTelefone())
                 .build();
     }
 
