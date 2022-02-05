@@ -29,4 +29,5 @@ public class GisaUser {
 
     private Long telefone;
 
+
 }
