@@ -28,6 +28,4 @@ public class GisaUser {
     private String areaAtuacao;
 
     private Long telefone;
-
-
 }
