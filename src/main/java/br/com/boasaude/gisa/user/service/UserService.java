@@ -2,6 +2,7 @@ package br.com.boasaude.gisa.user.service;
 
 import br.com.boasaude.gisa.user.domain.GisaUser;
 import br.com.boasaude.gisa.user.dto.UserDto;
+import br.com.boasaude.gisa.user.kafka.UserProducer;
 import br.com.boasaude.gisa.user.repository.UserRepository;
 import com.auth0.exception.Auth0Exception;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +20,7 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final ManagementAPIService managementAPIService;
+    private final UserProducer userProducer;
 
     @Transactional(readOnly = true)
     public List<UserDto> listar() {
@@ -37,11 +38,14 @@ public class UserService {
         GisaUser gisaUser = getUser(userDto);
         managementAPIService.atualizarUserRole(role, gisaUser.getEmail());
         userRepository.save(gisaUser);
-        return getUserDto(gisaUser);
+        UserDto userDtoRetorno = getUserDto(gisaUser);
+        userProducer.send(userDto, "CRIACAO");
+        return userDtoRetorno;
     }
 
     public void delete(Long id) {
         userRepository.deleteById(id);
+        userProducer.send(UserDto.builder().id(id).build(), "DELECAO");
     }
 
     @Transactional
@@ -56,7 +60,9 @@ public class UserService {
             gisaUser.setTelefone(userDto.getTelefone());
 
             managementAPIService.atualizarMetadata(userDto, role);
-            return getUserDto(userRepository.save(gisaUser));
+            UserDto userDtoRetorno = getUserDto(userRepository.save(gisaUser));
+            userProducer.send(userDto, "ATUALIZACAO");
+            return userDtoRetorno;
         }
 
         throw new EntityNotFoundException("Usuário não cadastrado");
@@ -83,6 +89,5 @@ public class UserService {
                 .telefone(gisaUser.getTelefone())
                 .build();
     }
-
 
 }

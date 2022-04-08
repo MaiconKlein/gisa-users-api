@@ -10,6 +10,7 @@ import com.auth0.exception.Auth0Exception;
 import com.auth0.json.auth.TokenHolder;
 import com.auth0.json.mgmt.Role;
 import com.auth0.json.mgmt.RolesPage;
+import com.auth0.json.mgmt.users.User;
 import com.auth0.json.mgmt.users.UsersPage;
 import com.auth0.net.AuthRequest;
 import com.auth0.net.Request;
@@ -61,10 +62,12 @@ public class ManagementAPIService {
                     userMetadata.put("role", role);
                     userMetadata.put("areaAtuacao", userDto.getAreaAtuacao());
 
-                    userAuth.setUserMetadata(userMetadata);
+                    User user = new User();
+                    user.setUserMetadata(userMetadata);
+                    user.setClientId(userAuth.getId());
 
                     try {
-                        mgmt.users().update(userAuth.getId(), userAuth).execute();
+                        mgmt.users().update(userAuth.getId(), user).execute();
                     } catch (Auth0Exception e) {
                         throw new TechnicalException();
                     }
