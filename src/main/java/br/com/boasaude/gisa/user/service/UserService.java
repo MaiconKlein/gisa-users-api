@@ -37,7 +37,7 @@ public class UserService {
 
         GisaUser gisaUser = getUser(userDto);
         managementAPIService.atualizarUserRole(role, gisaUser.getEmail());
-        userRepository.save(gisaUser);
+        gisaUser = userRepository.save(gisaUser);
         UserDto userDtoRetorno = getUserDto(gisaUser);
         userProducer.send(userDto, "CRIACAO");
         return userDtoRetorno;
