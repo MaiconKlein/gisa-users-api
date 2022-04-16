@@ -81,7 +81,6 @@ public class UserService {
 
     private UserDto getUserDto(GisaUser gisaUser) {
         return UserDto.builder()
-                .id(gisaUser.getUserId())
                 .cpf(gisaUser.getCpf())
                 .email(gisaUser.getEmail())
                 .nome(gisaUser.getNome())
