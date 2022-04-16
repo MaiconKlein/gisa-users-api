@@ -49,29 +49,35 @@ public class ManagementAPIService {
         });
     }
 
-    public void atualizarMetadata(UserDto userDto, String role) throws Auth0Exception {
-        ManagementAPI mgmt = getManagementAPI();
+    public void atualizarMetadata(UserDto userDto, String role) {
+        try {
+            ManagementAPI mgmt = getManagementAPI();
 
-        UsersPage usersPage = getUsersByEmail(userDto.getEmail(), mgmt);
+            UsersPage usersPage = getUsersByEmail(userDto.getEmail(), mgmt);
 
-        usersPage.getItems().stream().findAny()
-                .ifPresent(userAuth -> {
-                    Map<String, Object> userMetadata = userAuth.getUserMetadata();
-                    userMetadata.put("cpf", userDto.getCpf());
-                    userMetadata.put("nome", userDto.getNome());
-                    userMetadata.put("role", role);
-                    userMetadata.put("areaAtuacao", userDto.getAreaAtuacao());
+            usersPage.getItems().stream().findAny()
+                    .ifPresent(userAuth -> {
+                        Map<String, Object> userMetadata = userAuth.getUserMetadata();
+                        userMetadata.put("cpf", userDto.getCpf());
+                        userMetadata.put("nome", userDto.getNome());
+                        userMetadata.put("role", role);
+                        userMetadata.put("areaAtuacao", userDto.getAreaAtuacao());
 
-                    User user = new User();
-                    user.setUserMetadata(userMetadata);
-                    user.setClientId(userAuth.getId());
+                        User user = new User();
+                        user.setUserMetadata(userMetadata);
+                        user.setClientId(userAuth.getId());
 
-                    try {
-                        mgmt.users().update(userAuth.getId(), user).execute();
-                    } catch (Auth0Exception e) {
-                        throw new TechnicalException();
-                    }
-                });
+
+                        try {
+                            mgmt.users().update(userAuth.getId(), user).execute();
+                        } catch (Auth0Exception e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    });
+        } catch (Exception e) {
+            log.error("Erro durante update do metadata.");
+        }
     }
 
     private ManagementAPI getManagementAPI() throws Auth0Exception {

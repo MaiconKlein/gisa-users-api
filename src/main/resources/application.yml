@@ -11,6 +11,17 @@ spring:
       connectionTimeout: 5000
       maximumPoolSize: 5
 
+  kafka:
+    properties:
+      security.protocol: SASL_SSL
+      sasl.mechanism: SCRAM-SHA-256
+      sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="gg51lf9u" password="sn6w0kN4GUAySZScy1USUhxoQzeV2rgW";
+    bootstrap-servers: tricycle-01.srvs.cloudkafka.com:9094,tricycle-02.srvs.cloudkafka.com:9094,tricycle-03.srvs.cloudkafka.com:9094
+    consumer:
+      group-id: gisa-users-api
+
+
+
   jpa:
     open-in-view: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -19,7 +30,7 @@ spring:
       use-new-id-generator-mappings: false
 
 user:
-  topic: user-event-topic-v1
+  topic: gg51lf9u-user-event-topic-v1
 
 logging.level.root: INFO
 

@@ -25,16 +25,16 @@ public class UserProducer {
     private final ObjectMapper objectMapper;
 
     public void send(UserDto userDto, String evento) {
-//        Message<String> message = null;
-//        try {
-//            message = MessageBuilder.withPayload(objectMapper.writeValueAsString(userDto))
-//                    .setHeader(KafkaHeaders.TOPIC, userTopic)
-//                    .setHeader("evento", evento)
-//                    .build();
-//            kafkaTemplate.send(message);
-//        } catch (JsonProcessingException e) {
-//            log.error("erro durante parse", e);
-//        }
+        Message<String> message = null;
+        try {
+            message = MessageBuilder.withPayload(objectMapper.writeValueAsString(userDto))
+                    .setHeader(KafkaHeaders.TOPIC, userTopic)
+                    .setHeader("evento", evento)
+                    .build();
+            kafkaTemplate.send(message);
+        } catch (JsonProcessingException e) {
+            log.error("erro durante parse", e);
+        }
 
     }
 }
